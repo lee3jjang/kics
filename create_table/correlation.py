@@ -14,7 +14,6 @@
 # KICS_CORR_CNTR_NL
 # KICS_CORR_SCR_NL
 
-
 import sqlite3
 
 conn = sqlite3.connect('../kics.db')
