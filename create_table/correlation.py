@@ -8,6 +8,12 @@
 # 5. 대재해-일반손해간 상관계수 (0.25)
 ######################################
 
+# KICS_CORR_PREM_RSV_NL
+# KICS_CORR_BOZ_INR_NL (신규)
+# KICS_CORR_BOZ_NL
+# KICS_CORR_CNTR_NL
+# KICS_CORR_SCR_NL
+
 
 import sqlite3
 
