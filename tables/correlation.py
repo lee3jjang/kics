@@ -18,7 +18,7 @@
 
 import sqlite3
 
-conn = sqlite3.connect('../kics.db')
+conn = sqlite3.connect('kics.db')
 cur = conn.cursor()
 
 # 1. KICS_CORR_PREM_RSV_NL(보험가격 및 준비금 상관계수)
