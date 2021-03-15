@@ -57,20 +57,6 @@ cur.execute("""
     );
 """)
 
-# 3. KICS_CORR_SCR_NL(보험가격준비금위험액 및 대재해위험액 상관계수)
-cur.execute("""
-    CREATE TABLE IF NOT EXISTS KICS_CORR_SCR_NL (
-        SCR_CD TEXT,                    /* 요구자본코드 */
-        OTH_SCR_CD TEXT,                /* 상대요구자본코드 */
-        APLY_STRT_DATE TEXT,            /* 적용시작일자 */
-        APLY_END_DATE TEXT,             /* 적용종료일자 */
-        CORR_COEF NUMERIC,              /* 상관계수 */
-        LAST_MODIFIED_BY TEXT,
-        LAST_UPDATE_DATE TEXT,
-        PRIMARY KEY (SCR_CD, OTH_SCR_CD, APLY_STRT_DATE, APLY_END_DATE)
-    )
-""")
-
 # 4. KICS_CORR_CNTR_NL(지역간 상관계수)
 cur.execute("""
     CREATE TABLE IF NOT EXISTS KICS_CORR_CNTR_NL (
@@ -82,5 +68,19 @@ cur.execute("""
         LAST_MODIFIED_BY TEXT,
         LAST_UPDATE_DATE TEXT,
         PRIMARY KEY (KICS_CNTR_CATG_CD, KICS_OTH_CNTR_CATG_CD, APLY_STRT_DATE, APLY_END_DATE)
+    )
+""")
+
+# 5. KICS_CORR_SCR_NL(보험가격준비금위험액 및 대재해위험액 상관계수)
+cur.execute("""
+    CREATE TABLE IF NOT EXISTS KICS_CORR_SCR_NL (
+        SCR_CD TEXT,                    /* 요구자본코드 */
+        OTH_SCR_CD TEXT,                /* 상대요구자본코드 */
+        APLY_STRT_DATE TEXT,            /* 적용시작일자 */
+        APLY_END_DATE TEXT,             /* 적용종료일자 */
+        CORR_COEF NUMERIC,              /* 상관계수 */
+        LAST_MODIFIED_BY TEXT,
+        LAST_UPDATE_DATE TEXT,
+        PRIMARY KEY (SCR_CD, OTH_SCR_CD, APLY_STRT_DATE, APLY_END_DATE)
     )
 """)
