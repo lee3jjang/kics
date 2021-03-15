@@ -1,7 +1,4 @@
-import sqlite3
-
-conn = sqlite3.connect('../kics.db')
-cur = conn.cursor()
+# 최종수정일자 : 2021.03.15 
 
 ############ 상관계수 순서 ############
 # 1. 보험가격 및 준비금 상관계수 (0.25)
@@ -10,6 +7,12 @@ cur = conn.cursor()
 # 4. 지역간 상관계수 (0.25)
 # 5. 대재해-일반손해간 상관계수 (0.25)
 ######################################
+
+
+import sqlite3
+
+conn = sqlite3.connect('../kics.db')
+cur = conn.cursor()
 
 # 1. KICS_CORR_PREM_RSV_NL(보험가격 및 준비금 상관계수)
 cur.execute("""
