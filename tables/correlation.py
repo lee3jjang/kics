@@ -1,27 +1,27 @@
 # 최종수정일자 : 2021.03.15 
 
-############# 테이블 목록 #############
+############# 테이블 목록 ##########
 # KICS_CORR_PREM_RSV_NL
-# KICS_CORR_BOZ_INR_NL (신규)
+# (신규) KICS_CORR_BOZ_INR_NL 
 # KICS_CORR_BOZ_NL
 # KICS_CORR_CNTR_NL
 # KICS_CORR_SCR_NL
-######################################
+###################################
 
-############ 상관계수 순서 ############
-# 1. 보험가격 및 준비금 상관계수 (0.25)
-# 2. 보장그룹내 상관계수 (0.25~1)
-# 3. 보장그룹간 상관계수 (0.5)
-# 4. 지역간 상관계수 (0.25)
-# 5. 대재해-일반손해간 상관계수 (0.25)
-######################################
+############ 상관계수 순서 #########
+# 보험가격 및 준비금 상관계수 (0.25)
+# 보장그룹내 상관계수 (0.25~1)
+# 보장그룹간 상관계수 (0.5)
+# KICS국가그룹간 상관계수 (0.25)
+# 대재해-일반손해간 상관계수 (0.25)
+###################################
 
 import sqlite3
 
 conn = sqlite3.connect('kics.db')
 cur = conn.cursor()
 
-# 1. KICS_CORR_PREM_RSV_NL(보험가격 및 준비금 상관계수)
+# KICS_CORR_PREM_RSV_NL(보험가격 및 준비금 상관계수)
 cur.execute("""
     CREATE TABLE IF NOT EXISTS KICS_CORR_PREM_RSV_NL (
         CNTR_CATG_CD TEXT,              /* 국가그룹코드 */
@@ -37,7 +37,7 @@ cur.execute("""
     )
 """)
 
-# 2. (신규) KICS_CORR_BOZ_INR_NL(보장단위간 상관계수)
+# (신규) KICS_CORR_BOZ_INR_NL(보장단위간 상관계수)
 cur.execute("""
     CREATE TABLE IF NOT EXISTS KICS_CORR_BOZ_INR_NL (
         BOZ_CATG_CD TEXT,               /* 보장그룹코드 */
@@ -52,7 +52,7 @@ cur.execute("""
     )
 """)
 
-# 3. KICS_CORR_BOZ_NL(보장그룹간 상관계수)
+# KICS_CORR_BOZ_NL(보장그룹간 상관계수)
 cur.execute("""
     CREATE TABLE IF NOT EXISTS KICS_CORR_BOZ_NL (
         KICS_CNTR_CATG_CD TEXT,         /* KICS국가그룹코드 */
@@ -67,7 +67,7 @@ cur.execute("""
     );
 """)
 
-# 4. KICS_CORR_CNTR_NL(지역간 상관계수)
+# KICS_CORR_CNTR_NL(KICS국가그룹간 상관계수)
 cur.execute("""
     CREATE TABLE IF NOT EXISTS KICS_CORR_CNTR_NL (
         KICS_CNTR_CATG_CD TEXT,         /* KICS국가그룹코드 */
@@ -81,7 +81,7 @@ cur.execute("""
     )
 """)
 
-# 5. KICS_CORR_SCR_NL(보험가격준비금위험액 및 대재해위험액 상관계수)
+# KICS_CORR_SCR_NL(보험가격준비금위험액 및 대재해위험액 상관계수)
 cur.execute("""
     CREATE TABLE IF NOT EXISTS KICS_CORR_SCR_NL (
         SCR_CD TEXT,                    /* 요구자본코드 */
