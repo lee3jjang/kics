@@ -1,5 +1,13 @@
 # 최종수정일자 : 2021.03.15 
 
+############# 테이블 목록 #############
+# KICS_CORR_PREM_RSV_NL
+# KICS_CORR_BOZ_INR_NL (신규)
+# KICS_CORR_BOZ_NL
+# KICS_CORR_CNTR_NL
+# KICS_CORR_SCR_NL
+######################################
+
 ############ 상관계수 순서 ############
 # 1. 보험가격 및 준비금 상관계수 (0.25)
 # 2. 보장그룹내 상관계수 (0.25~1)
@@ -7,12 +15,6 @@
 # 4. 지역간 상관계수 (0.25)
 # 5. 대재해-일반손해간 상관계수 (0.25)
 ######################################
-
-# KICS_CORR_PREM_RSV_NL
-# KICS_CORR_BOZ_INR_NL (신규)
-# KICS_CORR_BOZ_NL
-# KICS_CORR_CNTR_NL
-# KICS_CORR_SCR_NL
 
 import sqlite3
 
