@@ -18,14 +18,14 @@
 
 import sqlite3
 
-class Mapping():
+class Risk():
 
     @classmethod
     def create_table(cls, database_name):
         conn = sqlite3.connect(database_name)
 
         # (수정) KICS_BOZ_CD_RISK_NL(KICS국가그룹 및 보장단위별 위험액)
-        cur.execute("""
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS KICS_BOZ_CD_RISK_NL (
                 BASE_DATE TEXT,                 /* 기준일자 */
                 KICS_CNTR_CATG_CD TEXT,         /* KICS국가그룹코드 */
@@ -42,7 +42,7 @@ class Mapping():
         """)
 
         # (신규) KICS_BOZ_GRP_RISK_NL(KICS국가그룹 및 보장그룹별 위험액)
-        cur.execute("""
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS KICS_BOZ_GRP_RISK_NL (
                 BASE_DATE TEXT,                 /* 기준일자 */
                 KICS_CNTR_CATG_CD TEXT,         /* KICS국가그룹코드 */
@@ -55,7 +55,7 @@ class Mapping():
         """)
 
         # (수정) KICS_CNTR_RISK_NL(KICS국가그룹별 위험액)
-        cur.execute("""
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS KICS_CNTR_RISK_NL (
                 BASE_DATE TEXT,                 /* 기준일자 */
                 KICS_CNTR_CATG_CD TEXT,         /* KICS국가그룹코드 */
@@ -67,7 +67,7 @@ class Mapping():
         """)
 
         # KICS_TOT_RISK_NL(일반손해보험위험액)
-        cur.execute("""
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS KICS_TOT_RISK_NL (
                 BASE_DATE TEXT,                 /* 기준일자 */
                 CAT_CAL_CD TEXT,                /* 대재해위험액산출기준(1: 원수, 2: 보유)
