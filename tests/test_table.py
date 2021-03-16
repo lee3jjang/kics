@@ -2,7 +2,6 @@ import os
 import pdb
 import sqlite3
 
-
 def test_select_table():
     conn = sqlite3.connect(os.environ['DATABASE_NAME'])
     cur = conn.cursor()

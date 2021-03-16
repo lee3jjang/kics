@@ -1,4 +1,5 @@
 import os
+import pdb
 import pytest
 import sqlite3
 import tempfile
@@ -16,6 +17,10 @@ from kics.tables.risk import Risk
 def database():
     # _, file_name = tempfile.mkstemp()
     file_name = 'kics.db'
+    try:
+        os.unlink(file_name)
+    except:
+        pass
     os.environ['DATABASE_NAME'] = file_name
     Coefficient.create_table(file_name)
     Correlation.create_table(file_name)
@@ -53,10 +58,17 @@ def insert_table_from_sample():
         .to_sql('KICS_RISK_COEF_NL', conn, index=False, if_exists='append')
 
     # risk
+    pd.read_excel(path_sample_data / 'KICS_BOZ_CD_RISK_NL.xlsx') \
+        .merge(kics_cntr_grp_nl[['CNTR_CATG_CD', 'KICS_CNTR_CATG_CD']], on='CNTR_CATG_CD', how='left') \
+        .query('RRNR_DVCD != "01"') \
+        .groupby(['BASE_DATE', 'KICS_CNTR_CATG_CD', 'BOZ_CD'])[['RETAIN_LAPS_PRM', 'RETAIN_RSV_LIAB', 'PREM_RISK_AMT', 'RSV_RISK_AMT']].sum() \
+        .eval('BOZ_CD_RISK = sqrt(PREM_RISK_AMT**2 + RSV_RISK_AMT**2 + 2*0.25*PREM_RISK_AMT*RSV_RISK_AMT)') \
+        .assign(LAST_MODIFIED_BY = lambda x: None) \
+        .assign(LAST_UPDATE_DATE = lambda x: None) \
+        .to_sql('KICS_BOZ_CD_RISK_NL', conn, index=False, if_exists='append')
     pd.read_excel(path_sample_data / 'KICS_CNTR_RISK_NL.xlsx') \
         .drop('BOZ_CD_RISK', axis=1) \
         .to_sql('KICS_CNTR_RISK_NL', conn, index=False, if_exists='append')
-    # pd.read_excel(path_sample_data / 'KICS_BOZ_CD_RISK_NL.xlsx').to_sql('KICS_BOZ_CD_RISK_NL', conn, index=False, if_exists='append')
     pd.read_excel(path_sample_data / 'KICS_TOT_RISK_NL.xlsx').to_sql('KICS_TOT_RISK_NL', conn, index=False, if_exists='append')
 
     conn.close()
