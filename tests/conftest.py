@@ -72,5 +72,3 @@ def insert_table_from_sample():
     pd.read_excel(path_sample_data / 'KICS_TOT_RISK_NL.xlsx').to_sql('KICS_TOT_RISK_NL', conn, index=False, if_exists='append')
 
     conn.close()
-
-    
