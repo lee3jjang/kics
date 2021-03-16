@@ -5,6 +5,13 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
+####################### 프로그램 목록 #######################
+# KAKD0002LM : 국가그룹별 요구자본 산출
+# KAKD0008LM : 보종단위별 요구자본 산출
+# KAKD9001LM : 보종그룹별 요구자본 산출 (신규)
+# KAJC0011LM : 보험가격준비금위험액 및 일반손해보험위험액 산출
+############################################################
+
 
 def KAKD0002LM(base_date: str) -> pd.DataFrame:
     # 최종수정일자 : 2021.03.16
@@ -41,7 +48,7 @@ def KAKD9001LM(base_date: str) -> pd.DataFrame:
     # 최종수정일자 : 2021.03.16
     ########################### KAKD9001LM ###########################
     # DESCRIPTION:
-    #   국가그룹별 요구자본 산출
+    #   보종그룹별 요구자본 산출
     # SOURCE:
     #   KICS_BOZ_CD_RISK_NL -> KICS_BOZ_GRP_RISK_NL
     #   KICS_CORR_BOZ_NL -> KICS_CORR_BOZ_INR_NL
@@ -61,12 +68,10 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     #   KICS_CORR_CNTR_NL
     # TARGET: 
     #   KICS_TOT_RISK_NL
-    ##################################################################
-
-    ########################### TEST(FAIL) ###########################
     # WARNING:
     #   TARGET 완성을 위해선 대재해위험액 산출관련 SOURCE와 로직이 더 필요
-    # TARGET 중 CNTR_RISK, KICS_PRM_RSV_RISK 컬럼은 테스트 통과
+    # TEST:
+    #   TARGET 중 CNTR_RISK, KICS_PRM_RSV_RISK 컬럼은 테스트 통과
     ##################################################################   
     
     base_date0 = datetime.strptime(base_date, '%Y%m%d').strftime('%Y-%m-%d 00:00:00')
@@ -100,6 +105,6 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
 
     # 검증
     # assert target['CNTR_RISK'] == risk_by_cntr.sum()
-    # assert np.isclose(target['KICS_PRM_RSV_RISK'], np.sqrt(risk_by_cntr@corr_btw_cntr@risk_by_cntr))    
+    # assert np.isclose(target['KICS_PRM_RSV_RISK'], np.sqrt(risk_by_cntr@corr_btw_cntr@risk_by_cntr))
 
     conn.close()
