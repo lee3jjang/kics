@@ -11,6 +11,7 @@ from kics.tables.exposure import Exposure
 from kics.tables.mapping import Mapping
 from kics.tables.risk import Risk
 
+
 @pytest.fixture(autouse=True)
 def database():
     # _, file_name = tempfile.mkstemp()
@@ -22,7 +23,7 @@ def database():
     Mapping.create_table(file_name)
     Risk.create_table(file_name)
     yield
-    # os.unlink(file_name)
+    os.unlink(file_name)
 
 
 @pytest.fixture(autouse=True)
@@ -52,9 +53,11 @@ def insert_table_from_sample():
         .to_sql('KICS_RISK_COEF_NL', conn, index=False, if_exists='append')
 
     # risk
+    pd.read_excel(path_sample_data / 'KICS_CNTR_RISK_NL.xlsx') \
+        .drop('BOZ_CD_RISK', axis=1) \
+        .to_sql('KICS_CNTR_RISK_NL', conn, index=False, if_exists='append')
     # pd.read_excel(path_sample_data / 'KICS_BOZ_CD_RISK_NL.xlsx').to_sql('KICS_BOZ_CD_RISK_NL', conn, index=False, if_exists='append')
-    # pd.read_excel(path_sample_data / 'KICS_CNTR_RISK_NL.xlsx').to_sql('KICS_CNTR_RISK_NL', conn, index=False, if_exists='append')
-    # pd.read_excel(path_sample_data / 'KICS_TOT_RISK_NL.xlsx').to_sql('KICS_TOT_RISK_NL', conn, index=False, if_exists='append')
+    pd.read_excel(path_sample_data / 'KICS_TOT_RISK_NL.xlsx').to_sql('KICS_TOT_RISK_NL', conn, index=False, if_exists='append')
 
     conn.close()
 
