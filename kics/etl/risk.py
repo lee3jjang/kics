@@ -15,6 +15,7 @@ from datetime import datetime
 
 
 def KAKD0008LM(base_date: str) -> pd.DataFrame:
+    # TODO: KICS_PRM_RSV_EXPO 더미데이터 생성 후 작업
     # 최종수정일자 : 2021.03.16
     ########################### KAKD0008LM ###########################
     # DESCRIPTION:
@@ -92,6 +93,8 @@ def KAKD0002LM(base_date: str) -> pd.DataFrame:
 
 
 def KAJC0011LM(base_date: str) -> pd.DataFrame:
+    # TODO: 대재해위험액 산출관련 SOURCE와 로직 추가
+    # TEST: TARGET 중 CNTR_RISK, KICS_PRM_RSV_RISK 컬럼은 테스트 통과
     # 최종수정일자 : 2021.03.16
     ########################### KAJC0011LM ###########################
     # DESCRIPTION:
@@ -101,10 +104,6 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     #   KICS_CORR_CNTR_NL
     # TARGET: 
     #   KICS_TOT_RISK_NL
-    # WARNING:
-    #   TARGET 완성을 위해선 대재해위험액 산출관련 SOURCE와 로직이 더 필요
-    # TEST:
-    #   TARGET 중 CNTR_RISK, KICS_PRM_RSV_RISK 컬럼은 테스트 통과
     ##################################################################   
     
     base_date0 = datetime.strptime(base_date, '%Y%m%d').strftime('%Y-%m-%d 00:00:00')
