@@ -80,7 +80,7 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     cur = conn.cursor()
 
     # KICS_CNTR_RISK_NL 추출
-    cur.execute(f'SELECT KICS_CNTR_CATG_CD, CNTR_RISK FROM KICS_CNTR_RISK_NL WHERE BASE_DATE="{base_date0}"')
+    cur.execute(f'SELECT KICS_CNTR_CATG_CD, CNTR_RISK FROM KICS_CNTR_RISK_NL WHERE BASE_DATE=?', (base_date0,))
     risk_by_cntr = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description]) \
         .sort_values(by='KICS_CNTR_CATG_CD') \
         .set_index('KICS_CNTR_CATG_CD')['CNTR_RISK']
@@ -89,9 +89,9 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     cur.execute(f'''
         SELECT KICS_CNTR_CATG_CD, KICS_OTH_CNTR_CATG_CD, CORR_COEF
           FROM KICS_CORR_CNTR_NL
-          WHERE APLY_STRT_DATE<="{base_date}"
-            AND APLY_END_DATE>="{base_date}"
-    ''')
+          WHERE APLY_STRT_DATE<=?
+            AND APLY_END_DATE>=?
+    ''', (base_date, base_date))
     corr_btw_cntr = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description]) \
         .pivot_table(index='KICS_CNTR_CATG_CD', columns='KICS_OTH_CNTR_CATG_CD', values='CORR_COEF', aggfunc=np.sum)
 
@@ -105,18 +105,5 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     conn.close()
 
     return kics_tot_risk_nl
-    
-       
-    # KICS_TOT_RISK_NL(TARGET) 추출
-    # cur.execute(f'''
-    #     SELECT CNTR_RISK, KICS_PRM_RSV_RISK
-    #       FROM KICS_TOT_RISK_NL
-    #      WHERE BASE_DATE="{base_date}" AND CAT_CAL_CD="2"
-    # ''')
-    # target = pd.Series(cur.fetchone(), index=[x[0] for x in cur.description])
-
-    # 검증
-    # assert target['CNTR_RISK'] == kics_tot_risk_nl['CNTR_RISK']
-    # assert np.isclose(target['KICS_PRM_RSV_RISK'], kics_tot_risk_nl['KICS_PRM_RSV_RISK'])
 
     
