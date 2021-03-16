@@ -27,8 +27,6 @@ class Correlation():
         # KICS_CORR_PREM_RSV_NL(보험가격 및 준비금 상관계수)
         conn.execute("""
             CREATE TABLE IF NOT EXISTS KICS_CORR_PREM_RSV_NL (
-                CNTR_CATG_CD TEXT,              /* 국가그룹코드 */
-                BOZ_CD TEXT,                    /* 보종코드 */
                 PREM_RSV_CD,                    /* 보험가격준비금코드 */
                 OTH_PREM_RSV_CD,                /* 상대보험가격준비금코드 */
                 APLY_STRT_DATE TEXT,            /* 적용시작일자 */
@@ -36,7 +34,7 @@ class Correlation():
                 CORR_COEF NUMERIC,              /* 상관계수 */
                 LAST_MODIFIED_BY TEXT,
                 LAST_UPDATE_DATE TEXT,
-                PRIMARY KEY (CNTR_CATG_CD, BOZ_CD, PREM_RSV_CD, OTH_PREM_RSV_CD, APLY_STRT_DATE, APLY_END_DATE)
+                PRIMARY KEY (PREM_RSV_CD, OTH_PREM_RSV_CD, APLY_STRT_DATE, APLY_END_DATE)
             )
         """)
 

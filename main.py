@@ -1,8 +1,5 @@
 import os
-import sys
 import sqlite3
-import subprocess
-from pathlib import Path
 from kics.etl.risk import *
 
 
@@ -12,6 +9,7 @@ class KicsMain():
         os.environ['DATABASE_NAME'] = file_name
 
     def run(self, base_date):
+        kics_boz_cd_risk_nl = KAKD0008LM(base_date)
         kics_tot_risk_nl = KAJC0011LM(base_date)
 
 

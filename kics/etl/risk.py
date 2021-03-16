@@ -5,12 +5,76 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
+
 ####################### 프로그램 목록 #######################
+# KAKD0008LM : 국가그룹 및 보장단위별 요구자본 산출
+# KAKD9001LM : 국가그룹 및 보장그룹별 요구자본 산출 (신규)
 # KAKD0002LM : 국가그룹별 요구자본 산출
-# KAKD0008LM : 보종단위별 요구자본 산출
-# KAKD9001LM : 보종그룹별 요구자본 산출 (신규)
 # KAJC0011LM : 보험가격준비금위험액 및 일반손해보험위험액 산출
 ############################################################
+
+
+def KAKD0008LM(base_date: str) -> pd.DataFrame:
+    # 최종수정일자 : 2021.03.16
+    ########################### KAKD0008LM ###########################
+    # DESCRIPTION:
+    #   국가그룹 및 보장단위별 요구자본 산출
+    # SOURCE:
+    #   KICS_CORR_PREM_RSV_NL
+    #   KICS_PRM_RSV_EXPO
+    #   KICS_RISK_COEF_NL
+    #   KICS_BOZ_GRP_MAP_NL (삭제)
+    # TARGET: 
+    #   KICS_BOZ_CD_RISK_NL
+    ##################################################################
+    
+    base_date0 = datetime.strptime(base_date, '%Y%m%d').strftime('%Y-%m-%d 00:00:00')
+    
+    conn = sqlite3.connect(os.environ['DATABASE_NAME'])
+    cur = conn.cursor()
+
+    # KICS_PRM_RSV_EXPO_NL 추출
+
+    # KICS_RISK_COEF_NL 추출
+    cur.execute(f'''
+        SELECT BOZ_CD, APLY_STRT_DATE, APLY_END_DATE, PREM_RISK_COEF, RSV_RISK_COEF
+          FROM KICS_RISK_COEF_NL
+         WHERE APLY_STRT_DATE<=?
+           AND APLY_END_DATE>?
+    ''', (base_date, base_date))
+    risk_coef = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description]) \
+            [['BOZ_CD', 'PREM_RISK_COEF', 'RSV_RISK_COEF']] \
+            .sort_values(by='BOZ_CD')
+
+    # KICS_CORR_PREM_RSV_NL 추출
+    cur.execute(f'''
+        SELECT PREM_RSV_CD, OTH_PREM_RSV_CD, CORR_COEF
+          FROM KICS_CORR_PREM_RSV_NL
+         WHERE APLY_STRT_DATE<=?
+           AND APLY_END_DATE>?
+    ''', (base_date, base_date))
+    corr_prem_rsv = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description]) \
+        .pivot_table(index='PREM_RSV_CD', columns='OTH_PREM_RSV_CD', values='CORR_COEF', aggfunc=np.sum)
+
+    conn.close()
+
+    # return kics_boz_cd_risk_nl
+
+
+def KAKD9001LM(base_date: str) -> pd.DataFrame:
+    # 신규
+    # 최종수정일자 : 2021.03.16
+    ########################### KAKD9001LM ###########################
+    # DESCRIPTION:
+    #   국가그룹 및 보장그룹별 요구자본 산출
+    # SOURCE:
+    #   KICS_BOZ_CD_RISK_NL (신규)
+    #   KICS_CORR_BOZ_INR_NL (신규)
+    #   KICS_BOZ_GRP_MAP_NL (신규)
+    # TARGET: 
+    #   KICS_BOZ_GRP_RISK_NL
+    ##################################################################
+    pass
 
 
 def KAKD0002LM(base_date: str) -> pd.DataFrame:
@@ -19,39 +83,8 @@ def KAKD0002LM(base_date: str) -> pd.DataFrame:
     # DESCRIPTION:
     #   국가그룹별 요구자본 산출
     # SOURCE:
-    #   KICS_BOZ_CD_RISK_NL -> KICS_BOZ_GRP_RISK_NL
-    #   KICS_CORR_BOZ_NL -> KICS_CORR_BOZ_INR_NL
-    # TARGET: 
-    #   KICS_CNTR_RISK_NL
-    ##################################################################
-    pass
-
-
-def KAKD0008LM(base_date: str) -> pd.DataFrame:
-    # 최종수정일자 : 2021.03.16
-    ########################### KAKD0008LM ###########################
-    # DESCRIPTION:
-    #   보종단위별 요구자본 산출
-    # SOURCE:
-    #   KICS_CORR_PREM_RSV_NL
-    #   KICS_PRM_RSV_EXPO
-    #   KICS_RISK_COEF_NL
-    #   KICS_BOZ_GRP_MAP_NL
-    # TARGET: 
-    #   KICS_BOZ_CD_RISK_NL
-    ##################################################################
-    pass
-
-
-def KAKD9001LM(base_date: str) -> pd.DataFrame:
-    # 신규
-    # 최종수정일자 : 2021.03.16
-    ########################### KAKD9001LM ###########################
-    # DESCRIPTION:
-    #   보종그룹별 요구자본 산출
-    # SOURCE:
-    #   KICS_BOZ_CD_RISK_NL -> KICS_BOZ_GRP_RISK_NL
-    #   KICS_CORR_BOZ_NL -> KICS_CORR_BOZ_INR_NL
+    #   KICS_BOZ_GRP_RISK_NL
+    #   KICS_CORR_BOZ_NL
     # TARGET: 
     #   KICS_CNTR_RISK_NL
     ##################################################################
@@ -62,7 +95,7 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     # 최종수정일자 : 2021.03.16
     ########################### KAJC0011LM ###########################
     # DESCRIPTION:
-    #   국가그룹별 위험액에 상관계수 반영하여 보험가격준비금위험액 산출
+    #   보험가격준비금위험액 및 일반손해보험위험액 산출
     # SOURCE:
     #   KICS_CNTR_RISK_NL
     #   KICS_CORR_CNTR_NL
@@ -90,7 +123,7 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
         SELECT KICS_CNTR_CATG_CD, KICS_OTH_CNTR_CATG_CD, CORR_COEF
           FROM KICS_CORR_CNTR_NL
           WHERE APLY_STRT_DATE<=?
-            AND APLY_END_DATE>=?
+            AND APLY_END_DATE>?
     ''', (base_date, base_date))
     corr_btw_cntr = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description]) \
         .pivot_table(index='KICS_CNTR_CATG_CD', columns='KICS_OTH_CNTR_CATG_CD', values='CORR_COEF', aggfunc=np.sum)

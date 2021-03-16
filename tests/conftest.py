@@ -39,7 +39,10 @@ def insert_table_from_sample():
     # correlation
     pd.read_excel(path_sample_data / 'KICS_CORR_BOZ_NL.xlsx').to_sql('KICS_CORR_BOZ_NL', conn, index=False, if_exists='append')
     pd.read_excel(path_sample_data / 'KICS_CORR_CNTR_NL.xlsx').to_sql('KICS_CORR_CNTR_NL', conn, index=False, if_exists='append')
-    pd.read_excel(path_sample_data / 'KICS_CORR_PREM_RSV_NL.xlsx').to_sql('KICS_CORR_PREM_RSV_NL', conn, index=False, if_exists='append')
+    pd.read_excel(path_sample_data / 'KICS_CORR_PREM_RSV_NL.xlsx') \
+        .query('BOZ_CD == "A001" and CNTR_CATG_CD == "1"') \
+        .drop(['CNTR_CATG_CD', 'BOZ_CD'], axis=1) \
+        .to_sql('KICS_CORR_PREM_RSV_NL', conn, index=False, if_exists='append')
     pd.read_excel(path_sample_data / 'KICS_CORR_SCR_NL.xlsx').to_sql('KICS_CORR_SCR_NL', conn, index=False, if_exists='append')
 
     # mapping
@@ -55,6 +58,7 @@ def insert_table_from_sample():
         .merge(kics_cntr_grp_nl[['CNTR_CATG_CD', 'KICS_CNTR_CATG_CD']], on='CNTR_CATG_CD', how='left') \
         .drop(['OVS_COVR_CD', 'CNTR_CATG_CD'], axis=1) \
         .query('BOZ_CD != "A100"') \
+        .drop('KICS_CNTR_CATG_CD', axis=1) \
         .to_sql('KICS_RISK_COEF_NL', conn, index=False, if_exists='append')
 
     # risk
@@ -65,6 +69,7 @@ def insert_table_from_sample():
         .eval('BOZ_CD_RISK = sqrt(PREM_RISK_AMT**2 + RSV_RISK_AMT**2 + 2*0.25*PREM_RISK_AMT*RSV_RISK_AMT)') \
         .assign(LAST_MODIFIED_BY = lambda x: None) \
         .assign(LAST_UPDATE_DATE = lambda x: None) \
+        .reset_index() \
         .to_sql('KICS_BOZ_CD_RISK_NL', conn, index=False, if_exists='append')
     pd.read_excel(path_sample_data / 'KICS_CNTR_RISK_NL.xlsx') \
         .drop('BOZ_CD_RISK', axis=1) \

@@ -15,7 +15,6 @@ class Coefficient():
         # (수정) KICS_RISK_COEF_NL(KICS국가그룹 및 보장단위별 위험계수)
         conn.execute("""
             CREATE TABLE IF NOT EXISTS KICS_RISK_COEF_NL (
-                KICS_CNTR_CATG_CD TEXT,         /* KICS국가그룹코드 */
                 BOZ_CD TEXT,                    /* 보종코드 */
                 APLY_STRT_DATE TEXT,            /* 적용시작일자 */
                 APLY_END_DATE TEXT,             /* 적용종료일자 */
@@ -23,7 +22,7 @@ class Coefficient():
                 RSV_RISK_COEF NUMERIC,          /* 준비금위험계수 */
                 LAST_MODIFIED_BY TEXT,
                 LAST_UPDATE_DATE TEXT,
-                PRIMARY KEY (KICS_CNTR_CATG_CD, BOZ_CD, APLY_STRT_DATE, APLY_END_DATE)
+                PRIMARY KEY (BOZ_CD, APLY_STRT_DATE, APLY_END_DATE)
             )
         """)
 
