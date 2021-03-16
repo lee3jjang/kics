@@ -1,0 +1,9 @@
+ETL 만들 때 IO를
+커서를 밖에서 만들어주고
+입력으로 주면
+-> output으로 데이터프레임이 나와서
+그걸 db로 넣기
+
+etl > theme > functions
+def KAJC0011(base_date: str) -> pd.DataFrame:
+    pass
