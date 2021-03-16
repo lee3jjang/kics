@@ -28,7 +28,7 @@ def database():
     Mapping.create_table(file_name)
     Risk.create_table(file_name)
     yield
-    os.unlink(file_name)
+    # os.unlink(file_name)
 
 
 @pytest.fixture(autouse=True)
