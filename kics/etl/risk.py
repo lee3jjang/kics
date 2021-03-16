@@ -7,16 +7,16 @@ from datetime import datetime
 
 
 ####################### 프로그램 목록 #######################
-# KAKD0008LM : 국가그룹 및 보장단위별 요구자본 산출
-# KAKD9001LM : 국가그룹 및 보장그룹별 요구자본 산출 (신규)
-# KAKD0002LM : 국가그룹별 요구자본 산출
-# KAJC0011LM : 보험가격준비금위험액 및 일반손해보험위험액 산출
+# KAKD0008LM: 국가그룹 및 보장단위별 요구자본 산출
+# KAKD9001LM: 국가그룹 및 보장그룹별 요구자본 산출 (신규)
+# KAKD0002LM: 국가그룹별 요구자본 산출
+# KAJC0011LM: 보험가격준비금위험액 및 일반손해보험위험액 산출
 ############################################################
 
 
 def KAKD0008LM(base_date: str) -> pd.DataFrame:
+    # 최종수정일자: 2021.03.16
     # TODO: KICS_PRM_RSV_EXPO 더미데이터 생성 후 작업
-    # 최종수정일자 : 2021.03.16
     ########################### KAKD0008LM ###########################
     # DESCRIPTION:
     #   국가그룹 및 보장단위별 요구자본 산출
@@ -63,8 +63,8 @@ def KAKD0008LM(base_date: str) -> pd.DataFrame:
 
 
 def KAKD9001LM(base_date: str) -> pd.DataFrame:
+    # 최종수정일자: 2021.03.16
     # 신규
-    # 최종수정일자 : 2021.03.16
     ########################### KAKD9001LM ###########################
     # DESCRIPTION:
     #   국가그룹 및 보장그룹별 요구자본 산출
@@ -79,7 +79,7 @@ def KAKD9001LM(base_date: str) -> pd.DataFrame:
 
 
 def KAKD0002LM(base_date: str) -> pd.DataFrame:
-    # 최종수정일자 : 2021.03.16
+    # 최종수정일자: 2021.03.16
     ########################### KAKD0002LM ###########################
     # DESCRIPTION:
     #   국가그룹별 요구자본 산출
@@ -93,9 +93,9 @@ def KAKD0002LM(base_date: str) -> pd.DataFrame:
 
 
 def KAJC0011LM(base_date: str) -> pd.DataFrame:
+    # 최종수정일자: 2021.03.16
     # TODO: 대재해위험액 산출관련 SOURCE와 로직 추가
     # TEST: TARGET 중 CNTR_RISK, KICS_PRM_RSV_RISK 컬럼은 테스트 통과
-    # 최종수정일자 : 2021.03.16
     ########################### KAJC0011LM ###########################
     # DESCRIPTION:
     #   보험가격준비금위험액 및 일반손해보험위험액 산출
