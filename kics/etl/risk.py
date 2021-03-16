@@ -94,6 +94,18 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     ''')
     corr_btw_cntr = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description]) \
         .pivot_table(index='KICS_CNTR_CATG_CD', columns='KICS_OTH_CNTR_CATG_CD', values='CORR_COEF', aggfunc=np.sum)
+
+    # KICS_TOT_RISK_NL 생성
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    kics_tot_risk_nl = pd.DataFrame(
+        [[base_date, '2', risk_by_cntr.sum(),np.sqrt(risk_by_cntr@corr_btw_cntr@risk_by_cntr), None, None, None, None, 'lee3jjang', now]],
+        columns=['BASE_DATE', 'CAT_CAL_CD', 'CNTR_RISK', 'KICS_PRM_RSV_RISK', 'KICS_IND_CAT_RISK', 'KICS_CAT_RISK', 'DVS_EFCT', 'KICS_NON_LIFE_RISK', 'LAST_MODIFIED_BY', 'LAST_UPDATE_DATE']
+    )
+
+    conn.close()
+
+    return kics_tot_risk_nl
+    
        
     # KICS_TOT_RISK_NL(TARGET) 추출
     # cur.execute(f'''
@@ -104,7 +116,7 @@ def KAJC0011LM(base_date: str) -> pd.DataFrame:
     # target = pd.Series(cur.fetchone(), index=[x[0] for x in cur.description])
 
     # 검증
-    # assert target['CNTR_RISK'] == risk_by_cntr.sum()
-    # assert np.isclose(target['KICS_PRM_RSV_RISK'], np.sqrt(risk_by_cntr@corr_btw_cntr@risk_by_cntr))
+    # assert target['CNTR_RISK'] == kics_tot_risk_nl['CNTR_RISK']
+    # assert np.isclose(target['KICS_PRM_RSV_RISK'], kics_tot_risk_nl['KICS_PRM_RSV_RISK'])
 
-    conn.close()
+    

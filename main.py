@@ -12,7 +12,7 @@ class KicsMain():
         os.environ['DATABASE_NAME'] = file_name
 
     def run(self, base_date):
-        KAJC0011LM(base_date)
+        kics_tot_risk_nl = KAJC0011LM(base_date)
 
 
 if __name__ == '__main__':
