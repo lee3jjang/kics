@@ -11,6 +11,7 @@ from kics.tables.correlation import Correlation
 from kics.tables.exposure import Exposure
 from kics.tables.mapping import Mapping
 from kics.tables.risk import Risk
+from kics.tables.liability import Liability
 
 
 @pytest.fixture(autouse=True)
@@ -27,6 +28,7 @@ def database():
     Exposure.create_table(file_name)
     Mapping.create_table(file_name)
     Risk.create_table(file_name)
+    Liability.create_table(file_name)
     yield
     # os.unlink(file_name)
 
