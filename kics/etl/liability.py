@@ -47,4 +47,6 @@ def KAJC0009LM(base_date: str) -> pd.DataFrame:
     pass
 
 def KAJC0013LM(base_date: str) -> pd.DataFrame:
+    # 최종수정일자: 2021.03.22
+    # TODO: 로직구현
     pass
