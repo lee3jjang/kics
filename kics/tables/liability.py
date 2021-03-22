@@ -1,13 +1,19 @@
 # 최종수정일자 : 2021.03.22
 
 ##################### 테이블 목록 ######################
-# (수정) KICS_PREM_EXPO_NL_G
 # (삭제) KICS_PAY_CF_INTERFACE (KAJC0003LM, KAJC0012LM)
 # (수정) KICS_PAY_CF_NL (KAJC0012LM, KAJC0016LM, KAJC0017LM, KAJC0018LM)
 # (수정) KICS_DISC_FAC_NL (KAJC0004LM)
 # (수정) KICS_ASSUM_NL (KAJC0002LM)
 # (신규) KICS_USER_ASSUM_NL (XXXX0000LM)
 # (신규) KICS_APLY_ASSUM_NL (XXXX0000LM)
+
+# (수정) KICS_PREM_EXPO_NL_G
+# (수정) KICS_PREM_EXPO_NL_C
+# (수정) KICS_RSV_EXPO_NL_G
+# (수정) KICS_RSV_EXPO_NL_C
+# (수정) KICS_PRM_RPT
+# (수정) KICS_RSV_RPT
 #######################################################
 
 import sqlite3
@@ -32,6 +38,18 @@ class Liability():
                 CNNT_DMSN_DVCD TEXT             /* 연동수수료구분코드 */
             )
         """)
+
+
+        # (수정) KICS_PREM_EXPO_NL_C(보험료부채 익스포져_자동차)
+        # (수정) KICS_RSV_EXPO_NL_G(준비금부채 익스포져_일반)
+        # TODO: 가정의 Driving Factor도 집계되게 테이블 설계
+        #       준비금리스크 익스포져도 고려
+        # (수정) KICS_RSV_EXPO_NL_C(준비금부채 익스포져_자동차)
+        # TODO: 가정의 Driving Factor도 집계되게 테이블 설계
+        #       준비금리스크 익스포져도 고려
+        # (수정) KICS_PRM_RPT(보험료부채)
+        # (수정) KICS_RSV_RPT(준비금부채)
+
 
         # (수정) KICS_PAY_CF_NL(보험금 현금흐름)
         conn.execute("""
