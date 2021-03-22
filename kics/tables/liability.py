@@ -3,7 +3,7 @@
 ##################### 테이블 목록 ######################
 # (수정) KICS_PREM_EXPO_NL_G
 # (삭제) KICS_PAY_CF_INTERFACE (KAJC0003LM, KAJC0012LM)
-# (삭제) KICS_PAY_CF_NL (KAJC0012LM)
+# (수정) KICS_PAY_CF_NL (KAJC0012LM, KAJC0016LM, KAJC0017LM, KAJC0018LM)
 # (수정) KICS_DISC_FAC_NL (KAJC0004LM)
 # (수정) KICS_ASSUM_NL (KAJC0002LM)
 #######################################################
