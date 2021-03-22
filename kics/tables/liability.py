@@ -5,6 +5,7 @@
 # (삭제) KICS_PAY_CF_INTERFACE (KAJC0003LM, KAJC0012LM)
 # (삭제) KICS_PAY_CF_NL (KAJC0012LM)
 # (수정) KICS_DISC_FAC_NL (KAJC0004LM)
+# (수정) KICS_ASSUM_NL (KAJC0002LM)
 #######################################################
 
 import sqlite3
@@ -58,6 +59,25 @@ class Liability():
                 BOZ_CD TEXT,                    /* 보종코드 */
                 PRM_DISC_FC NUMERIC,            /* 보험료부채할인요소 */
                 RSV_DISC_FC NUMERIC,            /* 준비금부채할인요소 */
+                LAST_MODIFIED_BY TEXT,
+                LAST_UPDATE_DATE TEXT,
+                PRIMARY KEY (BASE_DATE, RRNR_DVCD, DMFR_DVCD, BOZ_CD)
+            )
+        """)
+
+        # (수정) KICS_ASSUM_NL(가정)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS KICS_ASSUM_NL (
+                BASE_DATE TEXT,                 /* 기준일자 */
+                RRNR_DVCD TEXT,                 /* 재보험구분코드 */
+                DMFR_DVCD TEXT,                 /* 국내외구분코드 */
+                BOZ_CD TEXT,                    /* 보종코드 */
+                RY_RT NUMERIC,                  /* 회수율 */
+                RISK_RT NUMERIC,                /* 최종손해율 */
+                PREM_DAG_IVMT_RT NUMERIC,       /* 보험료부채손조비율 */
+                EXP_RT NUMERIC,                 /* 유지비율 */
+                IBNR_RT NUMERIC,                /* IBNR율 */
+                RSV_DAG_IVMT_RT NUMERIC,        /* 보험금부채손조비율 */
                 LAST_MODIFIED_BY TEXT,
                 LAST_UPDATE_DATE TEXT,
                 PRIMARY KEY (BASE_DATE, RRNR_DVCD, DMFR_DVCD, BOZ_CD)
