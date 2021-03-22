@@ -7,12 +7,13 @@
 # (수정) KICS_ASSUM_NL (KAJC0002LM)
 # (신규) KICS_USER_ASSUM_NL (XXXX0000LM)
 # (신규) KICS_APLY_ASSUM_NL (XXXX0000LM)
-
+# (수정) KICS_RINSC_ADJ_NL (KAJC0013LM)
 # (수정) KICS_PREM_EXPO_NL_G
 # (수정) KICS_PREM_EXPO_NL_C
 # (수정) KICS_RSV_EXPO_NL_G
 # (수정) KICS_RSV_EXPO_NL_C
 # (수정) KICS_PRM_RPT
+# (수정) KICS_RSV_RPT
 # (수정) KICS_RSV_RPT
 #######################################################
 
@@ -48,7 +49,8 @@ class Liability():
         # TODO: 가정의 Driving Factor도 집계되게 테이블 설계
         #       준비금리스크 익스포져도 고려
         # (수정) KICS_PRM_RPT(보험료부채)
-        # (수정) KICS_RSV_RPT(준비금부채)
+        # (수정) KICS_RSV_RPT(준비금부채, 준비금익스포져)
+        # (수정) KICS_RINSC_ADJ_NL(재보험자산 손실조정)
 
 
         # (수정) KICS_PAY_CF_NL(보험금 현금흐름)
