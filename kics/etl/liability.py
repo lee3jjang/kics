@@ -20,6 +20,7 @@ from datetime import datetime
 # KAJC0013LM: 재보험자산 손실조정 산출
 ############################################################
 
+
 def KAKD0003LM(base_date: str) -> pd.DataFrame:
     # 최종수정일자: 2021.03.22
     # TODO: 로직구현
