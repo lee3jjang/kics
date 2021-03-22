@@ -2,19 +2,19 @@
 
 ##################### 테이블 목록 ######################
 # (삭제) KICS_PAY_CF_INTERFACE (KAJC0003LM, KAJC0012LM)
+
 # (수정) KICS_PAY_CF_NL (KAJC0012LM, KAJC0016LM, KAJC0017LM, KAJC0018LM)
 # (수정) KICS_DISC_FAC_NL (KAJC0004LM)
 # (수정) KICS_ASSUM_NL (KAJC0002LM)
 # (신규) KICS_USER_ASSUM_NL (XXXX0000LM)
 # (신규) KICS_APLY_ASSUM_NL (XXXX0000LM)
-# (수정) KICS_RINSC_ADJ_NL (KAJC0013LM)
-# (수정) KICS_PREM_EXPO_NL_G
-# (수정) KICS_PREM_EXPO_NL_C
-# (수정) KICS_RSV_EXPO_NL_G
-# (수정) KICS_RSV_EXPO_NL_C
+# (수정) KICS_PREM_EXPO_NL_G (KAJC0001LM)
+# (수정) KICS_PREM_EXPO_NL_C (KAJC0009LM)
+# (신규) KICS_RSV_EXPO_NL_G
+# (신규) KICS_RSV_EXPO_NL_C
 # (수정) KICS_PRM_RPT
 # (수정) KICS_RSV_RPT
-# (수정) KICS_RSV_RPT
+# (수정) KICS_RINSC_ADJ_NL (KAJC0013LM)
 #######################################################
 
 import sqlite3
@@ -34,7 +34,6 @@ class Liability():
                 DMFR_DVCD TEXT,                 /* 국내외구분코드 */
                 BOZ_CD TEXT,                    /* 보종코드 */
                 KICS_CNTR_CATG_CD TEXT,         /* KICS국가그룹코드 */
-                PDGR_CD TEXT,                   /* 상품군코드 */
                 PRON_NOT_PRON_DVCD TEXT,        /* 비례비비례구분코드 */
                 CNNT_DMSN_DVCD TEXT             /* 연동수수료구분코드 */
             )
@@ -43,10 +42,10 @@ class Liability():
 
         # (수정) KICS_PREM_EXPO_NL_C(보험료부채 익스포져_자동차)
         # (수정) KICS_RSV_EXPO_NL_G(준비금부채 익스포져_일반)
-        # TODO: 가정의 Driving Factor도 집계되게 테이블 설계
+        # TODO: 가정의 Driving Factor도 집계되게 테이블 설계(OS, 미경과)
         #       준비금리스크 익스포져도 고려
         # (수정) KICS_RSV_EXPO_NL_C(준비금부채 익스포져_자동차)
-        # TODO: 가정의 Driving Factor도 집계되게 테이블 설계
+        # TODO: 가정의 Driving Factor도 집계되게 테이블 설계(OS, 미경과)
         #       준비금리스크 익스포져도 고려
         # (수정) KICS_PRM_RPT(보험료부채)
         # (수정) KICS_RSV_RPT(준비금부채, 준비금익스포져)
