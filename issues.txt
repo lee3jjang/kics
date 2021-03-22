@@ -7,3 +7,5 @@ ETL 만들 때 IO를
 etl > theme > functions
 def KAJC0011(base_date: str) -> pd.DataFrame:
     pass
+
+예전에는 A100 -> 해외였는데, 국내 기준으로 재맵핑 필요함

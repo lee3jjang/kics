@@ -64,7 +64,7 @@ def insert_table_from_sample():
     # risk
     pd.read_excel(path_sample_data / 'KICS_BOZ_CD_RISK_NL.xlsx') \
         .merge(kics_cntr_grp_nl[['CNTR_CATG_CD', 'KICS_CNTR_CATG_CD']], on='CNTR_CATG_CD', how='left') \
-        .query('RRNR_DVCD != "01"') \
+        .query('RRNR_DVCD != "01" and BOZ_CD != "A100"') \
         .groupby(['BASE_DATE', 'KICS_CNTR_CATG_CD', 'BOZ_CD'])[['RETAIN_LAPS_PRM', 'RETAIN_RSV_LIAB', 'PREM_RISK_AMT', 'RSV_RISK_AMT']].sum() \
         .eval('BOZ_CD_RISK = sqrt(PREM_RISK_AMT**2 + RSV_RISK_AMT**2 + 2*0.25*PREM_RISK_AMT*RSV_RISK_AMT)') \
         .assign(LAST_MODIFIED_BY = lambda x: None) \
