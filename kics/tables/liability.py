@@ -55,7 +55,7 @@ class Liability():
         # (수정) KICS_PAY_CF_NL(보험금 현금흐름)
         conn.execute("""
             CREATE TABLE IF NOT EXISTS KICS_PAY_CF_NL (
-                BASE_DATE TEXT,                    /* 기준일자 */
+                BASE_DATE TEXT,                 /* 기준일자 */
                 RRNR_DVCD TEXT,                 /* 재보험구분코드 */
                 DMFR_DVCD TEXT,                 /* 국내외구분코드 */
                 BOZ_CD TEXT,                    /* 보종코드 */
@@ -63,7 +63,7 @@ class Liability():
                 PAY_CF NUMERIC,                 /* 지급보험금 */
                 PRM_AVR_PAY_TRM,                /* 보험료부채평균지급시점 */
                 RSV_AVR_PAY_TRM,                /* 준비금부채평균지급시점 */
-                PAY_RT NUMERIC,                 /* 지급율 */
+                PAY_RT NUMERIC,                 /* 지급률 */
                 ADJ_RT NUMERIC,                 /* 조정률 */
                 LAST_MODIFIED_BY TEXT,
                 LAST_UPDATE_DATE TEXT,
@@ -126,7 +126,7 @@ class Liability():
 
         # (신규) KICS_APLY_ASSUM_NL(가정-적용)
         conn.execute("""
-            CREATE TABLE IF NOT EXISTS KICS_USER_ASSUM_NL (
+            CREATE TABLE IF NOT EXISTS KICS_APLY_ASSUM_NL (
                 BASE_DATE TEXT,                 /* 기준일자 */
                 ASSUM_DVCD TEXT,                /* 가정구분코드 */
                 RRNR_DVCD TEXT,                 /* 재보험구분코드 */
